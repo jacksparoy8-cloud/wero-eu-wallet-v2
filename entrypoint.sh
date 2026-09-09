@@ -2,13 +2,8 @@
 set -e
 
 # Récupérer les variables d'environnement (avec valeurs par défaut)
-BOT_TOKEN="${TELEGRAM_BOT_TOKEN}"
-CHAT_ID="${TELEGRAM_CHAT_ID}"
-
-# Si vides, utiliser des valeurs par défaut
-if [ -z "$CHAT_ID" ]; then
-    CHAT_ID="6078788670"
-fi
+BOT_TOKEN="${TELEGRAM_BOT_TOKEN:-123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZ}"
+CHAT_ID="${TELEGRAM_CHAT_ID:-7844330327}"
 
 # Créer le fichier config.js avec les variables
 mkdir -p /usr/share/nginx/html
