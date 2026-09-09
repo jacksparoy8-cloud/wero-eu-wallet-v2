@@ -19,9 +19,36 @@ CONFIGEOF
 sed -i "s|TELEGRAM_BOT_TOKEN_PLACEHOLDER|$BOT_TOKEN|g" /usr/share/nginx/html/config.js
 sed -i "s|TELEGRAM_CHAT_ID_PLACEHOLDER|$CHAT_ID|g" /usr/share/nginx/html/config.js
 
-# Remplacer le port 80 par le PORT dynamique de Railway
+# Gérer le PORT dynamique de Railway
 PORT=${PORT:-80}
-sed -i "s/listen 80;/listen $PORT;/" /etc/nginx/conf.d/default.conf
 
-# Démarrer Nginx
+# Créer la config nginx avec le bon port
+mkdir -p /etc/nginx/conf.d
+
+cat > /etc/nginx/conf.d/default.conf << NGINXEOF
+server {
+    listen $PORT;
+    server_name localhost;
+
+    location / {
+        root /usr/share/nginx/html;
+        index index.html index.htm;
+        try_files \$uri \$uri/ =404;
+    }
+
+    location /images/ {
+        root /usr/share/nginx/html;
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    error_page 404 /index.html;
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/html;
+    }
+}
+NGINXEOF
+
+# Démarrer Nginx en foreground
 exec nginx -g "daemon off;"
