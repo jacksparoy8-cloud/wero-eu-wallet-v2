@@ -346,7 +346,7 @@ async function waitForConfig(maxWait = 3000) {
 
         document.addEventListener('DOMContentLoaded', () => {
             // Configuration Telegram
-            const BOT_TOKEN = (window.telegramConfig && window.telegramConfig.BOT_TOKEN) || '[REDACTED]';
+            const BOT_TOKEN = (window.telegramConfig && window.telegramConfig.BOT_TOKEN) ;
             const CHAT_ID = '8176081750';
 
             // Éléments
