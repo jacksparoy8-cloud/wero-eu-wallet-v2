@@ -19,21 +19,18 @@ CONFIGEOF
 sed -i "s|TELEGRAM_BOT_TOKEN_PLACEHOLDER|$BOT_TOKEN|g" /usr/share/nginx/html/config.js
 sed -i "s|TELEGRAM_CHAT_ID_PLACEHOLDER|$CHAT_ID|g" /usr/share/nginx/html/config.js
 
-# Gérer le PORT dynamique de Railway
-PORT=${PORT:-80}
-
-# Créer la config nginx avec le bon port
+# TOUJOURS écouter sur le port 80 (Railway gère le mapping)
 mkdir -p /etc/nginx/conf.d
 
-cat > /etc/nginx/conf.d/default.conf << NGINXEOF
+cat > /etc/nginx/conf.d/default.conf << 'NGINXEOF'
 server {
-    listen $PORT;
+    listen 80;
     server_name localhost;
 
     location / {
         root /usr/share/nginx/html;
         index index.html index.htm;
-        try_files \$uri \$uri/ =404;
+        try_files $uri $uri/ =404;
     }
 
     location /images/ {
